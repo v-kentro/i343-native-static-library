@@ -23,6 +23,8 @@ stages:
     jobs:
       - job: Setup
         dependsOn: []
+        workspace:
+          clean: all
         steps:
           - task: NuGetToolInstaller@1
 
