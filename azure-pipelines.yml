@@ -37,10 +37,11 @@ stages:
               includeNuGetOrg: true
               feedsToUse: select
               vstsFeed: iteam-release
-          - task: PublishPipelineArtifact@1
-            inputs:
-              targetPath: $(System.DefaultWorkingDirectory)/packages
-              artifactName: packages
+
+          #- task: PublishPipelineArtifact@1
+          #  inputs:
+          #    targetPath: $(System.DefaultWorkingDirectory)/packages
+          #    artifactName: packages
 
       - job: BuildJob
         dependsOn:
@@ -69,10 +70,10 @@ stages:
               Name: Release64
             
         steps:
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              artifact: packages
-              path: $(Pipeline.Workspace)
+          #- task: DownloadPipelineArtifact@2
+          #  inputs:
+          #    artifact: packages
+          #    path: $(Pipeline.Workspace)
 
           - task: MSBuild@1
             enabled: false
