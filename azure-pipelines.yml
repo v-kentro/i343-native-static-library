@@ -96,4 +96,4 @@ stages:
           - task: NuGetCommand@2
             inputs:
               command: pack
-              packagesToPack: '**/*.vcxproj'
+              packagesToPack: '**/*.nuspec'
