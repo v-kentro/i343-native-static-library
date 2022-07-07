@@ -106,6 +106,7 @@ stages:
 
           - task: VSTest@2
             inputs:
+              testRunTitle: $(Name)
               platform: $(BuildPlatform)
               configuration: $(BuildConfiguration)
               testSelector: testAssemblies
@@ -113,7 +114,8 @@ stages:
                 **\\*test*.dll
                 !**\\*TestAdapter.dll
                 !**\\obj\\**
-              testConfiguration: $(BuildConfiguration)
+              #testConfiguration: $(BuildConfiguration)
+              codeCoverageEnabled: true
 
       - job: Publish
         dependsOn:

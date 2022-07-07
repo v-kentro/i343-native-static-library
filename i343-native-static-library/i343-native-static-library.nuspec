@@ -65,7 +65,7 @@
         The header file is in the root directory in this project, but when packaged for distribution
         it is exposed as i343/static_math/mathematics.h.
         -->
-        <file src="i343/mathematics.h" target="include/i343/static_math/" />
+        <file src="mathematics.h" target="include/i343/static_math/" />
         <!--
         Any components added to the content/ folder will be copied into the consuming project.
         This is an interesting feature, but it means the copied files will be in a location where
