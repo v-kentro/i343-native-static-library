@@ -145,4 +145,4 @@ stages:
             inputs:
               command: pack
               packagesToPack: '**/*.nuspec'
-              basePath: i343-native-static-library
+              basePath: $(System.DefaultWorkingDirectory)/i343-native-static-library
