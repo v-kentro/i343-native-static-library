@@ -1,30 +1,99 @@
-# Universal Windows Platform
-# Build a Universal Windows Platform project using Visual Studio.
-# Add steps that test and distribute an app, save build artifacts, and more:
 # https://aka.ms/yaml
 
 trigger:
-- main
+  - main
+
+parameters: []
 
 pool:
   vmImage: 'windows-latest'
+  demands:
+    - msbuild
+    - visualstudio
+    - vstest
 
 variables:
   solution: '**/*.sln'
-  buildPlatform: 'x86|x64|ARM'
-  buildConfiguration: 'Release'
-  appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
 
-steps:
-- task: NuGetToolInstaller@1
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+stages:
+  - stage: Build
+    displayName: Build
+    dependsOn: []
+    jobs:
+      - job: Setup
+        dependsOn: []
+        steps:
+          - task: NuGetToolInstaller@1
 
-- task: VSBuild@1
-  inputs:
-    platform: 'x86'
-    solution: '$(solution)'
-    configuration: '$(buildConfiguration)'
-    msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)" /p:AppxPackageDir="$(appxPackageDir)" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=StoreUpload'
+          - task: NuGetAuthenticate@1
+
+          - task: NuGetCommand@2
+            inputs:
+              command: restore
+              restoreSolution: $(solution)
+              includeNuGetOrg: true
+              feedsToUse: select
+              vstsFeed: iteam-release
+
+      - job: BuildJob
+        dependsOn:
+          - Setup
+        strategy:
+          matrix:
+            Debug32:
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+            Debug64:
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+            Release32:
+              BuildConfiguration: Release
+              BuildPlatform: x86
+            Release64:
+              BuildConfiguration: Release
+              BuildPlatform: x64
+            
+        steps:
+          - task: MSBuild@1
+            enabled: false
+            inputs:
+              solution: $(solution)
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              clean: true
+              maximumCpuCount: false
+              msbuildArchitecture: x64
+              msbuildLocationMethod: version
+              msbuildVersion: latest
+              msbuildArguments: ''
+
+          - task: VSBuild@1
+            inputs:
+              solution: $(solution)
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              clean: true
+              maximumCpuCount: false
+              msbuildArchitecture: x64
+              vsVersion: latest
+              msbuildArgs: ''
+          - task: VSTest@2
+            inputs:
+              platform: $(BuildPlatform)
+              configuration: $(BuildConfiguration)
+              testSelector: testAssemblies
+              testAssemblyVer2: |
+                **\\*test*.dll
+                !**\\*TestAdapter.dll
+                !**\\obj\\**
+              testConfiguration: $(BuildConfiguration)
+
+      - job: Publish
+        dependsOn:
+          - BuildJob
+        steps:
+          - task: NuGetCommand@2
+            inputs:
+              command: pack
+              packagesToPack: '**/*.vcxproj'
