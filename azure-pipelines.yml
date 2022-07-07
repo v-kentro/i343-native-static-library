@@ -37,6 +37,10 @@ stages:
               includeNuGetOrg: true
               feedsToUse: select
               vstsFeed: iteam-release
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(System.DefaultWorkingDirectory)/packages
+              artifactName: packages
 
       - job: BuildJob
         dependsOn:
@@ -46,17 +50,30 @@ stages:
             Debug32:
               BuildConfiguration: Debug
               BuildPlatform: x86
+              Path: Debug
+              Name: Debug32
             Debug64:
               BuildConfiguration: Debug
               BuildPlatform: x64
+              Path: x64
+              Name: Debug64
             Release32:
               BuildConfiguration: Release
               BuildPlatform: x86
+              Path: Release
+              Name: Release32
             Release64:
               BuildConfiguration: Release
               BuildPlatform: x64
+              Path: x64
+              Name: Release64
             
         steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: packages
+              path: $(Pipeline.Workspace)
+
           - task: MSBuild@1
             enabled: false
             inputs:
@@ -80,6 +97,12 @@ stages:
               msbuildArchitecture: x64
               vsVersion: latest
               msbuildArgs: ''
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: $(Path)
+              artifactName: $(Name)
+
           - task: VSTest@2
             inputs:
               platform: $(BuildPlatform)
@@ -96,6 +119,26 @@ stages:
           - BuildJob
         steps:
           - task: NuGetToolInstaller@1
+
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: Debug32
+              path: $(Pipeline.Workspace)
+
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: Debug64
+              path: $(Pipeline.Workspace)
+
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: Release32
+              path: $(Pipeline.Workspace)
+
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifact: Release64
+              path: $(Pipeline.Workspace)
 
           - task: NuGetCommand@2
             inputs:
