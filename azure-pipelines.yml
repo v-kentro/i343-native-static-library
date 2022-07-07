@@ -151,5 +151,5 @@ stages:
 
           - task: PublishPipelineArtifact@1
             inputs:
-              targetPath: i343-native-static-library.nupkg
+              targetPath: i343-native-static-library.1.0.0.nupkg
               artifactName: package
