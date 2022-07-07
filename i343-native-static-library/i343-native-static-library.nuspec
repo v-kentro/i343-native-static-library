@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd https://raw.githubusercontent.com/NuGet/NuGet.Client/dev/src/NuGet.Core/NuGet.Packaging/compiler/resources/nuspec.xsd">
     <metadata minClientVersion="5.10">
         <id>i343-native-static-library</id>
         <version>1.0.0</version>
@@ -27,7 +29,7 @@
         <!--
         The README file that will be displayed for the NuGet package.
         -->
-        <file src="README.md" target="/" />
+        <file src="../README.md" target="/" />
         <!--
         Items in the build/ folder are added to the build process of the consuming project.
         This is further sub-divided by target framework, so a package may have different build logic
