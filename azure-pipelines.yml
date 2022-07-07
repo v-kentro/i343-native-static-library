@@ -148,3 +148,8 @@ stages:
               command: pack
               packagesToPack: '**/*.nuspec'
               basePath: $(System.DefaultWorkingDirectory)\i343-native-static-library
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '*.nupkg'
+              artifactName: package
