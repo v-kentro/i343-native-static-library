@@ -10,8 +10,8 @@
         <!--
         <license type="expression">AGPLv3</license>
         <icon></icon>
-        -->
         <readme>README.md</readme>
+        -->
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <developmentDependency>false</developmentDependency>
         <copyright>343i</copyright>
