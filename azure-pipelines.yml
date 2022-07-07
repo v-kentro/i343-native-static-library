@@ -95,6 +95,8 @@ stages:
         dependsOn:
           - BuildJob
         steps:
+          - task: NuGetToolInstaller@1
+
           - task: NuGetCommand@2
             inputs:
               command: pack
