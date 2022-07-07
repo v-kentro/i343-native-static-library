@@ -73,7 +73,7 @@ stages:
           #- task: DownloadPipelineArtifact@2
           #  inputs:
           #    artifact: packages
-          #    path: $(Pipeline.Workspace)
+          #    path: $(System.DefaultWorkingDirectory)
 
           - task: MSBuild@1
             enabled: false
@@ -124,22 +124,22 @@ stages:
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: Debug32
-              path: $(Pipeline.Workspace)
+              path: $(System.DefaultWorkingDirectory)
 
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: Debug64
-              path: $(Pipeline.Workspace)
+              path: $(System.DefaultWorkingDirectory)
 
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: Release32
-              path: $(Pipeline.Workspace)
+              path: $(System.DefaultWorkingDirectory)
 
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: Release64
-              path: $(Pipeline.Workspace)
+              path: $(System.DefaultWorkingDirectory)
 
           - task: NuGetCommand@2
             inputs:
