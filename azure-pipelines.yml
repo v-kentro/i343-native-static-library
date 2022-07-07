@@ -124,25 +124,25 @@ stages:
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: Debug32
-              path: $(System.DefaultWorkingDirectory)
+              path: $(System.DefaultWorkingDirectory)\Debug
 
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: Debug64
-              path: $(System.DefaultWorkingDirectory)
+              path: $(System.DefaultWorkingDirectory)\x64
 
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: Release32
-              path: $(System.DefaultWorkingDirectory)
+              path: $(System.DefaultWorkingDirectory)\Release
 
           - task: DownloadPipelineArtifact@2
             inputs:
               artifact: Release64
-              path: $(System.DefaultWorkingDirectory)
+              path: $(System.DefaultWorkingDirectory)\x64
 
           - task: NuGetCommand@2
             inputs:
               command: pack
               packagesToPack: '**/*.nuspec'
-              basePath: $(System.DefaultWorkingDirectory)/i343-native-static-library
+              basePath: $(System.DefaultWorkingDirectory)\i343-native-static-library
