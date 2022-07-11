@@ -44,7 +44,7 @@ jobs:
         with:
           searchFolder: '.\\'
           testAssembly: '**\\*test*.dll'
-          codeCoverageEnabled: true
+          codeCoverageEnabled: false
   package:
     name: Package
     runs-on: windows-2022
