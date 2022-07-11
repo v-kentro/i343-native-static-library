@@ -43,6 +43,7 @@ jobs:
         uses: microsoft/vstest-action@v1.0.0
         with:
           searchFolder: '.'
+          testAssembly: ${{ inputs.project_name }}-tests.dll
           codeCoverageEnabled: true
   package:
     name: Package
