@@ -39,12 +39,12 @@ jobs:
             x64/
             Debug/
             Release/
-      - name: Run Tests
-        uses: microsoft/vstest-action@v1.0.0
-        with:
-          searchFolder: ${{ inputs.project_name }}-tests
-          testAssembly: ${{ inputs.project_name }}-tests.dll
-          codeCoverageEnabled: true
+      #- name: Run Tests
+      #  uses: microsoft/vstest-action@v1.0.0
+      #  with:
+      #    searchFolder: ${{ inputs.project_name }}-tests
+      #    testAssembly: ${{ inputs.project_name }}-tests.dll
+      #    codeCoverageEnabled: true
   package:
     name: Package
     runs-on: windows-2022
