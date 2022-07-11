@@ -42,8 +42,11 @@ jobs:
       - name: Run Tests
         uses: microsoft/vstest-action@v1.0.0
         with:
-          searchFolder: '.'
-          testAssembly: ${{ inputs.project_name }}-tests.dll
+          searchFolder: Debug
+          testAssembly: |
+            **\\*test*.dll
+            !**\\*TestAdapter.dll
+            !**\\obj\\**'
           codeCoverageEnabled: true
   package:
     name: Package
